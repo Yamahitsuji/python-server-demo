@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Synchronized Slider</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+    <script src="https://cdn.socket.io/4.3.2/socket.io.min.js"
+            integrity="sha384-KAZ4DtjNhLChOB/hxXuKqhMLYvx3b5MlT55xPEiNmREKRzeEm+RVPlTnAn0ajQNs"
+            crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        const address = '{{ ip }}' + ':' + '{{ port }}';
+        console.log(address);
+        // sending a connect request to the server.
+        const socket = io(address);
+
+        // An event handler for a change of value
+        socket.emit('start streaming', {
+            who: 'hoga',
+            data: 'hugahuga'
+        });
+
+        socket.on('connected', (msg) => {
+            console.log('connected!', msg);
+        });
+
+        socket.on('update value', (msg) => {
+            console.log('update', msg);
+            document.getElementById('counting').innerHTML = msg;
+            // document.getElementById('streaming_img').src = msg;
+        });
+
+    </script>
+</head>
+<body>
+<div>
+    <h1>Demo</h1>
+    <p id="counting"></p>
+</div>
+</body>
+</html>
